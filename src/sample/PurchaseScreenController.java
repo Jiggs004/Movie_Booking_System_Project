@@ -8,6 +8,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.Random;
 import java.io.File;
 
 public class PurchaseScreenController {
@@ -24,79 +25,61 @@ public class PurchaseScreenController {
   
   // @FXML private TextField userReview;
   
-  
-  
   @FXML
-  private void onPurchasePressed(javafx.event.ActionEvent actionEvent) throws IOException {
+  private void onCardPurchasePressed(javafx.event.ActionEvent actionEvent) throws IOException {
     
-    Parent currScene = FXMLLoader.load(getClass().getResource("")); // View Times
-    Stage currStage = Main.getStage();
-
-    currStage.setTitle("Available Times");
-    currStage.setScene((new Scene(currScene, 600, 400)));
-    currStage.show();
-
-  }
-  
-  @FXML
-  private void onTimePressed(javafx.event.ActionEvent actionEvent) throws IOException {
-    
-    //  Card
+    // Confirmation details by displaying movie, time, and payment (last 4 digits of the card)
+      //  Card
    String CardholderNameText = CardholderName.getText();
    String CardNoText = CardNo.getText();
    String ExpDateText = ExpDate.getText();
    String SecCodeText = SecCode.getText();
+   Random rand = new Random();
+   int ticketNum = rand.nextInt(5000);
     
-   //  Paypal
-   String payEmailText = payEmail.getText();
-   String payPassText = payPass.getText();
-    
-   //  Venmo (If we want a second check method)
-   String venEmailText = venEmail.getText();
-   String venPassText = venPass.getText();
-    
-    // Tab through which payment method the user wishes to use (Card/Check) and enter details
-  
-    Parent currScene = FXMLLoader.load(getClass().getResource("")); 
-    Stage currStage = Main.getStage();
+   //check if credit detials work
 
-    currStage.setTitle("");
-    currStage.setScene((new Scene(currScene, 600, 400)));
-    currStage.show();
+   if (CardNoText.length() != 16 || SecCodeText.length() != 3) {
+    System.out.println("Invalid Card Details.");
+   }
+   else {
+    System.out.println("Purchase successful! Here is your ticket number: " + ticketNum);
+   }
 
   }
   
-  private void onDetailsViewed(javafx.event.ActionEvent actionEvent) throws IOException {
+  @FXML
+  private void onCheckPurchaseClicked(javafx.event.ActionEvent actionEvent) throws IOException {
     
-    // Confirm details by displaying movie, time, and payment (last 4 digits of the card or name of check)
-  
-    Parent currScene = FXMLLoader.load(getClass().getResource("")); 
-    Stage currStage = Main.getStage();
+     // Confirmation details by displaying movie, time, and payment (Which of Paypal/Venmo was used)
 
-    currStage.setTitle("");
-    currStage.setScene((new Scene(currScene, 600, 400)));
-    currStage.show();
+      /* This was supposed to get the information but we could not finish it in time
+     //  Paypal
+     String payEmailText = payEmail.getText();
+     String payPassText = payPass.getText();
+
+     //  Venmo 
+     String venEmailText = venEmail.getText();
+     String venPassText = venPass.getText();
+
+       */
+     Random rand = new Random();
+     int ticketNum = rand.nextInt(5000);
+
+     System.out.println("Purchase successfull! Here is your ticket: " + ticketNum);
+   }
+
+   @FXML
+   private void onReturnClicked(javafx.event.ActionEvent actionEvent) throws IOException {
+
+      Parent currScene = FXMLLoader.load(getClass().getResource("fxml/CustomerScreen.fxml"));
+      Stage currStage = Main.getStage();
+      currStage.setTitle("Movies");
+      currStage.setScene(new Scene(currScene, 600, 400));
+      currStage.show();
 
   }
   
-  private void onReturnClicked(javafx.event.ActionEvent actionEvent) throws IOException {
-    
-    // Successful Purchase Screen that displays ticket (Random Serial No.)
-  
-    Parent currScene = FXMLLoader.load(getClass().getResource("")); 
-    Stage currStage = Main.getStage();
-
-    currStage.setTitle("");
-    currStage.setScene((new Scene(currScene, 600, 400)));
-    currStage.show();
-
-  }
-  
-  private void onReviewClicked(javafx.event.ActionEvent actionEvent) throws IOException {
-    
-    //this can be done last if need be
-    
-  }
   
   
 }
